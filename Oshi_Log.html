@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<title>Oshi Log｜推し活現場管理</title>
+<style>
+:root{--pink:#ec4899;--pink2:#f9a8d4;--pale:#fff1f7;--paler:#fff8fb;--ink:#54233d;--muted:#8d6b7d;--line:#f5c6df;--white:#fff;--shadow:0 8px 28px #a52d6710;--accent-text:#9d174d;--accent-light:#fce7f3;--accent-bubble:#fbcfe8;--accent-bg:#fff7fb;--button-ink:#fff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fff7fb,#fff 440px);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:10px 14px;background:var(--pink);color:var(--button-ink,#fff);font-weight:700}button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}button.danger{background:var(--accent-bg);color:var(--accent-text);border:1px solid var(--line)}button.small{padding:6px 10px;font-size:.88rem}.wrap{max-width:1150px;margin:auto;padding:20px}.hero{background:linear-gradient(135deg,var(--pale),var(--accent-bg) 60%,#fff);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow);display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.eyebrow{font-size:.8rem;letter-spacing:.12em;color:var(--accent-text);font-weight:800}.hero h1{margin:4px 0;font-size:clamp(1.7rem,4vw,2.5rem)}.hero p{margin:5px 0;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.stat,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}.stat small{display:block;color:var(--muted)}.stat strong{font-size:1.7rem;color:var(--accent-text)}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.panel h2{font-size:1.1rem;margin:0 0 12px}.panel h3{margin:0 0 8px;font-size:1rem}.sectionhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.monthnav{display:flex;gap:8px;align-items:center}.monthnav strong{min-width:120px;text-align:center}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:12px}.dow,.day{min-height:62px;border-radius:10px;padding:6px}.dow{text-align:center;font-size:.78rem;color:var(--muted);min-height:auto}.day{background:var(--accent-bg);border:1px solid var(--line);color:var(--ink);text-align:left;position:relative}.day.muted{opacity:.35}.day.today{border:2px solid var(--pink)}.day.selected{background:var(--accent-light);border-color:var(--pink)}.day .num{font-size:.85rem}.dot{display:block;font-size:.65rem;line-height:1.3;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:color-mix(in srgb,var(--pink) 22%,white);border:1px solid color-mix(in srgb,var(--pink) 30%,white);border-radius:5px;padding:2px 3px;color:var(--accent-text)}.eventlist{display:grid;gap:9px}.eventcard{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--accent-bg)}.eventtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.eventcard h3{margin:0 0 4px}.meta{font-size:.83rem;color:var(--muted);line-height:1.6}.pill{display:inline-block;border-radius:999px;background:var(--accent-light);color:var(--accent-text);padding:3px 8px;font-size:.75rem;font-weight:700}.empty{color:var(--muted);text-align:center;padding:24px 8px}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:.84rem;font-weight:700;color:#8e315f}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--accent-bg);color:var(--ink)}textarea{min-height:90px;resize:vertical}.modal{position:fixed;inset:0;background:#39132d77;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.modal.open{display:flex}.modalbox{background:white;border-radius:20px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:20px;box-shadow:0 20px 80px #0003}.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}.modalhead h2{margin:0}.hidden{display:none!important}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tabs button.active{background:var(--pink)}.chatbox{background:var(--accent-bg);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:12px;max-height:52vh;overflow:auto}.chatrow{display:flex;flex-direction:column;max-width:86%;gap:3px}.chatrow.me{align-self:flex-end;align-items:flex-end}.chatrow.oshi{align-self:flex-start;align-items:flex-start}.chatrow.memo{align-self:center;max-width:96%;align-items:center}.bubble{padding:10px 13px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}.me .bubble{background:var(--accent-bubble);border-bottom-right-radius:5px}.oshi .bubble{background:white;border:1px solid var(--line);border-bottom-left-radius:5px}.memo .bubble{background:#fef3c7;color:#854d0e;border:1px dashed #f59e0b;font-size:.92rem}.chatname{font-size:.74rem;color:var(--muted);font-weight:800}.chattime{font-size:.7rem;color:#a78a9b}.chatcomposer{display:grid;grid-template-columns:120px 1fr auto;gap:8px;margin-top:10px}.chatcomposer select,.chatcomposer textarea{border:1px solid var(--line);border-radius:10px;padding:10px;min-width:0}.chatcomposer textarea{min-height:46px;max-height:130px}.chattools{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.recordlist{display:grid;gap:10px}.monthtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tile{background:var(--accent-bg);border:1px solid var(--line);padding:10px;border-radius:12px;text-align:center}.tile strong{display:block;color:var(--accent-text);font-size:1.25rem}.notice{font-size:.8rem;color:var(--muted);line-height:1.5}.footer{text-align:center;color:#b18a9f;font-size:.78rem;padding:22px}.hero.has-cover{background-size:cover;background-position:center;position:relative;overflow:hidden}.hero.has-cover:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#fff9 0%,#fff5 60%,#fff2)}.hero.has-cover>*{position:relative}.hero img{display:none}.settings-panel{margin:16px 0}.color-options{display:flex;gap:10px;flex-wrap:wrap}.color-chip{width:38px;height:38px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #e5c6d6}.color-chip.active{box-shadow:0 0 0 3px var(--ink)}.cover-preview{width:100%;max-height:190px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:none}.setting-actions{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:760px){.wrap{padding:12px}.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.fieldgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.day{min-height:52px;padding:4px}.dot{font-size:.58rem}.chatcomposer{grid-template-columns:1fr}.chatrow{max-width:94%}.monthtiles{grid-template-columns:repeat(3,1fr)}}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:10px}.photo-item{position:relative;min-width:0}.photo-item img{width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}.photo-item button{width:100%;margin-top:4px;padding:6px;font-size:12px}.photo-empty{font-size:13px;color:var(--muted);padding:8px 0}.tap-photo{cursor:zoom-in}.tap-photo:focus{outline:3px solid var(--pink);outline-offset:2px}.photo-viewer{position:fixed;inset:0;background:#160914eF;display:none;align-items:center;justify-content:center;padding:18px;z-index:100;cursor:zoom-out}.photo-viewer.open{display:flex}.photo-viewer img{max-width:100%;max-height:88vh;object-fit:contain;border-radius:10px;box-shadow:0 12px 50px #0008}.photo-viewer button{position:absolute;top:14px;right:14px;background:#fff;color:#4b1737;border:0}
+
+body.gated > :not(#passwordGate){visibility:hidden!important}
+#passwordGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(145deg,#fff1f7,#fff8fb 55%,#fce7f3)}
+#passwordGate .gate-card{width:min(100%,420px);background:#fff;border:1px solid #f5c6df;border-radius:24px;padding:28px;box-shadow:0 18px 60px #a52d6720;text-align:center}
+#passwordGate .gate-icon{font-size:2.4rem}
+#passwordGate h1{font-size:1.45rem;margin:8px 0;color:var(--accent-text)}
+#passwordGate p{color:#8d6b7d;line-height:1.65;font-size:.92rem}
+#passwordGate input{width:100%;border:1px solid #f5c6df;border-radius:12px;padding:12px;margin:8px 0 12px;background:var(--accent-bg);color:#54233d}
+#passwordGate .gate-error{color:#be123c;min-height:1.5em;font-size:.88rem}
+body.gated{overflow:hidden}
+
+
+/* Theme colors are driven by the selected oshi color; avoid fixed pink accents. */
+body{background:linear-gradient(180deg,var(--accent-bg),#fff 440px)!important;color:var(--ink)}
+.hero{background:linear-gradient(135deg,var(--pale),var(--accent-bg) 60%,#fff)!important;border-color:var(--line)!important;margin-bottom:0}
+.eyebrow,.field label,.stat strong,.tile strong{color:var(--accent-text)!important}
+.panel,.stat,.eventcard,.modalbox{border-color:var(--line)}
+button{background:var(--pink);color:var(--button-ink,#fff)}
+button.secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+button.danger{background:var(--accent-bg);color:var(--accent-text);border-color:var(--line)}
+.tabs button.active{background:var(--accent-text)!important}
+.day{background:var(--accent-bg);border-color:var(--line)}
+.day.today{border-color:var(--pink)}
+.day.selected{background:var(--accent-light);border-color:var(--pink)}
+.dot,.pill{background:var(--accent-light);color:var(--accent-text)}
+.eventcard,.tile{background:var(--accent-bg)}
+.me .bubble{background:var(--accent-bubble)}
+.oshi .bubble{border-color:var(--line)}
+.field input,.field select,.field textarea,.chatcomposer select,.chatcomposer textarea{border-color:var(--line);background:var(--accent-bg)}
+.color-chip{box-shadow:0 0 0 1px var(--line)}
+#passwordGate{background:linear-gradient(145deg,var(--pale),var(--accent-bg) 55%,var(--accent-light))}
+#passwordGate .gate-card{border-color:var(--line)}
+#passwordGate h1{color:var(--accent-text)}
+#passwordGate input{border-color:var(--line);background:var(--accent-bg);color:var(--ink)}
+.chatline{display:flex;align-items:flex-start;gap:8px;max-width:100%}
+.chatrow.me .chatline{justify-content:flex-end}
+.chatrow.oshi .chatline{justify-content:flex-start}
+.member-avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:var(--accent-light)}
+.member-avatar-placeholder{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;flex:0 0 34px;border-radius:50%;background:var(--accent-light);color:var(--accent-text);font-weight:800;border:1px solid var(--line)}
+.member-editor-list{display:grid;gap:10px;margin:8px 0 12px}
+.member-editor-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:10px;background:var(--accent-bg)}
+.member-editor-avatar{width:54px;height:54px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:var(--accent-light)}
+.member-editor-placeholder{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--accent-light);color:var(--accent-text);font-weight:800}
+.member-editor-controls{display:grid;gap:6px;min-width:0}
+.member-editor-controls input[type=text]{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff;color:var(--ink)}
+.member-editor-controls input[type=file]{font-size:.78rem;max-width:100%}
+.member-editor-remove{padding:7px 9px!important}
+@media(max-width:520px){.member-editor-row{grid-template-columns:48px minmax(0,1fr) auto;gap:7px;padding:8px}.member-editor-avatar,.member-editor-placeholder{width:44px;height:44px}}
+
+
+/* Compact, theme-aware presentation */
+:root{--theme-wash:color-mix(in srgb,var(--pink) 8%,white)}
+.hero{margin-bottom:18px;background:linear-gradient(135deg,var(--theme-wash),white 88%)!important;padding:26px 24px 28px}
+.hero h1{margin:8px 0 10px;line-height:1.2}
+.hero p{margin-top:8px}
+.day,.dot,.eventcard,.tile,.field input,.field select,.field textarea,.chatcomposer select,.chatcomposer textarea{border-color:var(--line)!important}
+.day.today{border-color:var(--pink)!important}.day.selected{background:var(--accent-light)!important;border-color:var(--pink)!important}
+.day,.eventcard,.tile{background:var(--accent-bg)!important}
+.dot,.pill{background:var(--accent-light)!important;color:var(--accent-text)!important}
+button:not(.secondary):not(.danger){background:var(--pink)!important;color:var(--button-ink)!important}
+.chatbox{padding:8px;gap:7px;border-radius:13px;max-height:48vh}
+.chatrow{gap:2px;max-width:88%}.chatline{display:flex;align-items:flex-start;gap:6px;max-width:100%}
+.bubble{padding:7px 10px;border-radius:13px;line-height:1.45;font-size:.92rem}
+.chatname{font-size:.68rem}.member-avatar,.member-avatar-placeholder{width:28px!important;height:28px!important;flex-basis:28px!important;border-radius:50%;object-fit:cover;flex-shrink:0}
+.oshi .bubble{border-color:var(--line)!important}.me .bubble{background:var(--accent-bubble)!important}
+.report-read-box{max-width:850px}.report-read-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;color:var(--muted);font-size:.86rem}
+.report-read-chat{max-height:none;overflow:visible;background:var(--accent-bg);padding:12px;gap:9px}
+.report-read-chat .bubble{font-size:.9rem}.report-read-chat .chatrow{max-width:90%}
+.event-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.detail-item{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--accent-bg);min-width:0}
+.detail-item small{display:block;color:var(--muted);font-size:.75rem;margin-bottom:3px}.detail-item strong{overflow-wrap:anywhere;font-weight:650}
+.detail-note{border:1px solid var(--line);border-radius:13px;background:var(--accent-bg);padding:12px;margin-bottom:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.detail-badges{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 12px}
+@media(max-width:600px){.event-detail-grid{grid-template-columns:1fr}.hero{padding:22px 18px 24px}.bubble{font-size:.9rem}}
+
+
+/* Theme consistency: accent and pale surfaces derive from the selected color. */
+body{background:linear-gradient(180deg,var(--accent-bg),#fff 440px);color:var(--ink)}
+.hero{background:linear-gradient(135deg,var(--pale),var(--accent-bg) 62%,#fff);border-color:var(--line)}
+.day{background:var(--accent-bg);border-color:var(--line)}
+.day.selected{background:var(--accent-light);border-color:var(--pink)}
+.eventcard,.tile,.detail-item,.detail-note,.member-editor-row{background:var(--accent-bg);border-color:var(--line)}
+.field input,.field select,.field textarea,.chatcomposer select,.chatcomposer textarea,#passwordGate input{background:var(--accent-bg);border-color:var(--line)}
+.tabs button.active{background:var(--pink);color:var(--button-ink)}
+.me .bubble{background:var(--accent-bubble);border-color:var(--line)}
+.oshi .bubble{border-color:var(--line)}
+.dot,.pill{background:var(--accent-light);color:var(--accent-text)}
+.stat strong,.tile strong,.eyebrow,.field label{color:var(--accent-text)}
+button.danger{background:var(--accent-bg);color:var(--accent-text);border:1px solid var(--line)}
+
+
+/* Fix color chips only: their own swatch color must win over global button styles. */
+button.color-chip{
+  background:var(--swatch-color)!important;
+  color:transparent!important;
+  padding:0!important;
+  min-width:38px;
+  min-height:38px;
+  border:3px solid #fff;
+}
+
+
+/* Softer theme: keep strong color on swatches and primary actions, use pale tints for large surfaces. */
+.day{background:var(--accent-light)!important;color:var(--accent-text)!important}
+.day.selected{background:var(--pale)!important;border-color:var(--pink)!important}
+.day.today{border-color:var(--pink)!important}
+.eventcard,.tile,.detail-item,.detail-note,.member-editor-row{background:var(--accent-bg)!important}
+.hero{background:linear-gradient(135deg,var(--theme-wash),#ffffff 72%)!important}
+
+
+/* Calendar softness adjustment: the theme color is an accent, not a full tile fill. */
+.calendar .day{
+  background: color-mix(in srgb, var(--pink) 5%, #ffffff) !important;
+  color: var(--ink) !important;
+  border-color: color-mix(in srgb, var(--pink) 24%, #ffffff) !important;
+}
+.calendar .day.selected{
+  background: color-mix(in srgb, var(--pink) 10%, #ffffff) !important;
+  border-color: var(--pink) !important;
+  color: var(--ink) !important;
+}
+.calendar .day.today{
+  border: 2px solid var(--pink) !important;
+}
+.calendar .day.muted{
+  background: color-mix(in srgb, var(--pink) 3%, #ffffff) !important;
+  color: var(--muted) !important;
+}
+
+
+/* Final calendar fix: use precomputed pale theme variables for every date tile. */
+#calendar .day,
+button.day,
+.calendar button.day{
+  background:var(--accent-bg)!important;
+  background-color:var(--accent-bg)!important;
+  color:var(--ink)!important;
+  border:1px solid var(--line)!important;
+}
+#calendar .day.selected,
+button.day.selected,
+.calendar button.day.selected{
+  background:var(--pale)!important;
+  background-color:var(--pale)!important;
+  color:var(--ink)!important;
+  border:1px solid var(--pink)!important;
+}
+#calendar .day.today,
+button.day.today,
+.calendar button.day.today{
+  border:2px solid var(--pink)!important;
+}
+#calendar .day.muted,
+button.day.muted,
+.calendar button.day.muted{
+  background:var(--accent-bg)!important;
+  background-color:var(--accent-bg)!important;
+  color:var(--muted)!important;
+}
+
+
+/* Final color balance: richer surfaces and borders, softer primary buttons. */
+:root{
+  --ink:#482035;
+  --muted:#765466;
+}
+.stat,.panel{border-color:color-mix(in srgb,var(--pink) 34%,white)}
+.hero{border-color:color-mix(in srgb,var(--pink) 38%,white)!important}
+.eventcard,.tile,.detail-item,.detail-note,.member-editor-row,
+.field input,.field select,.field textarea,.chatcomposer select,.chatcomposer textarea{
+  border-color:color-mix(in srgb,var(--pink) 34%,white)!important;
+}
+button:not(.secondary):not(.danger):not(.color-chip){
+  background:color-mix(in srgb,var(--pink) 22%,white)!important;
+  color:var(--accent-text)!important;
+  border:1px solid color-mix(in srgb,var(--pink) 34%,white)!important;
+}
+.tabs button.active{
+  background:color-mix(in srgb,var(--pink) 22%,white)!important;
+  color:var(--accent-text)!important;
+  border:1px solid color-mix(in srgb,var(--pink) 34%,white)!important;
+}
+
+/* Requested layout refinements */
+.event-detail-grid{border:1px solid var(--line);border-radius:14px;padding:10px;gap:0;background:var(--accent-bg);overflow:hidden}
+.event-detail-grid .detail-item{border:0;border-radius:0;background:transparent!important;padding:10px 12px}
+.event-detail-grid .detail-item:nth-child(odd){border-right:1px solid var(--line)}
+.event-detail-grid .detail-item:nth-child(n+3){border-top:1px solid var(--line)}
+.report-list-title{display:block;font-size:1rem;line-height:1.4}
+.report-list-subtitle{font-size:.78rem;margin-top:3px}
+@media(max-width:600px){.event-detail-grid{grid-template-columns:1fr}.event-detail-grid .detail-item:nth-child(odd){border-right:0}.event-detail-grid .detail-item:nth-child(n+2){border-top:1px solid var(--line)}}
+
+/* Report notebook list: give each report card breathing room */
+#reportArea > .eventcard{margin-bottom:14px;padding:15px 14px}
+#reportArea > .eventcard:last-child{margin-bottom:0}
+#reportArea .eventtop{gap:14px}
+#reportArea .report-list-subtitle{margin-top:5px;line-height:1.55}
+
+</style>
+
+<style id="chat-contrast-tweak">
+.chatbox, .report-read-chat {
+  background: #fff0f7 !important;
+  border-color: #eab0cf !important;
+}
+.chatrow.me .bubble {
+  background: #f8c1dd !important;
+  border: 1px solid #e58bb8 !important;
+  color: #54233d;
+}
+
+.report-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.report-tools input,.report-tools select{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--accent-bg);color:var(--ink);min-width:0}.report-search-results{display:grid;gap:10px}.favorite-btn{min-width:38px}.favorite-btn.is-favorite{background:#fff0f6;color:#c02670;border:1px solid #f4a7cc}.draft-status{font-size:.78rem;color:var(--muted);margin:6px 0}.dashboard-bottom{margin-top:18px}.dashboard-bottom .monthtiles{grid-template-columns:repeat(4,minmax(0,1fr))}.report-search-card{display:flex;justify-content:space-between;gap:12px;align-items:center}.report-search-card .meta{margin-top:4px}.backup-status{font-size:.8rem;color:var(--muted);margin-top:8px}
+@media(max-width:600px){.dashboard-bottom .monthtiles{grid-template-columns:repeat(2,minmax(0,1fr))}.report-search-card{align-items:flex-start;flex-direction:column}}
+.calendar .dot{background:color-mix(in srgb,var(--pink) 22%,white)!important;border:1px solid color-mix(in srgb,var(--pink) 34%,white)!important;color:var(--accent-text)!important;font-weight:700;padding:2px 4px}
+.calendar .day.selected .dot{background:color-mix(in srgb,var(--pink) 22%,white)!important;border-color:color-mix(in srgb,var(--pink) 34%,white)!important;color:var(--accent-text)!important}
+.favorite-mark{display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 4px;color:#b58ca0;font-size:1.25rem;line-height:1;user-select:none}
+.favorite-mark.is-favorite{color:#c02670}
+</style>
+</head>
+<body>
+
+<div id="passwordGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <div class="gate-icon" aria-hidden="true">🔒</div>
+    <p>パスワードを入力してください。</p>
+    <h1 id="gateTitle" class="hidden">Oshi Log</h1>
+    <form id="gateForm">
+      <input id="gatePassword" type="password" autocomplete="current-password" placeholder="パスワード" required>
+      <button type="submit" style="width:100%">開く</button>
+      <div id="gateError" class="gate-error" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<div id="photoViewer" class="photo-viewer" role="dialog" aria-modal="true" aria-label="写真を拡大表示" aria-hidden="true" onclick="if(event.target===this)closePhotoViewer()"><button type="button" onclick="closePhotoViewer()" aria-label="閉じる">閉じる ✕</button><img id="photoViewerImage" alt="思い出の写真を拡大表示"></div>
+
+<script>
+/*
+ * 公開前に設定してください：
+ * 下の PASSWORD_HASH を、使いたいパスワードの SHA-256 ハッシュに置き換えます。
+ * ハッシュはブラウザの開発者ツール等で作成できますが、パスワード画面は簡易的な抑止です。
+ * GitHub Pagesは公開サイトなので、機密情報の保護や本格的なアクセス制御には使えません。
+ */
+const PASSWORD_HASH = "ed5d450f46e02591914d670bde2ccd37c3f98d691a323d5913eec2af0fc9b62d";document.body.classList.add("gated");
+document.getElementById("gateForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+  const input = document.getElementById("gatePassword").value;
+  const error = document.getElementById("gateError");
+  if (PASSWORD_HASH === "CHANGE_ME_TO_SHA256_HASH") {
+    error.textContent = "公開前の設定が必要です。HTML内の PASSWORD_HASH を設定してください。";
+    return;
+  }
+  try {
+    const bytes = new TextEncoder().encode(input);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    const hash = Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, "0")).join("");
+    if (hash === PASSWORD_HASH.toLowerCase()) {
+      document.getElementById("passwordGate").remove();
+      document.body.classList.remove("gated");
+      sessionStorage.setItem("oshiLogUnlocked", "1");
+    } else {
+      error.textContent = "パスワードが違うみたい。もう一度試してね。";
+      document.getElementById("gatePassword").value = "";
+      document.getElementById("gatePassword").focus();
+    }
+  } catch (e) {
+    error.textContent = "このブラウザではパスワード確認を実行できません。";
+  }
+});
+if (sessionStorage.getItem("oshiLogUnlocked") === "1") {
+  document.getElementById("passwordGate").remove();
+  document.body.classList.remove("gated");
+}
+</script>
+
+<div class="wrap">
+<header class="hero">
+ <div><h1 id="appTitleDisplay">Oshi Log</h1><p id="appSubtitleDisplay">推し活現場管理</p></div>
+ <div class="actions"><button class="secondary" onclick="openSettings()">⚙設定</button><button onclick="openEvent()">＋ 現場を追加</button></div>
+</header>
+
+<div class="layout" style="grid-template-columns:1fr;margin-top:18px">
+ <section class="panel">
+  <div class="sectionhead"><h2>📅 カレンダー</h2><div class="monthnav"><button class="secondary small" onclick="moveMonth(-1)">‹</button><strong id="monthLabel"></strong><button class="secondary small" onclick="moveMonth(1)">›</button></div></div>
+  <div class="calendar" id="calendar"></div>
+  
+ </section>
+ <section class="panel">
+  <div class="sectionhead"><h2 id="selectedHeading">🎪予定</h2><button class="small" onclick="openEvent()">＋ 追加</button></div>
+  <details id="allSearchDetails" ontoggle="renderEvents()" style="margin-bottom:10px"><summary style="cursor:pointer;color:var(--muted);font-size:.9rem">すべて</summary><div class="field" style="margin:10px 0"><input id="search" placeholder="現場名・会場・レポを検索…" oninput="renderEvents()"></div><div class="fieldgrid" style="margin-bottom:12px"><div class="field"><label>ステータス</label><select id="filterStatus" onchange="renderEvents()"><option value="">すべて</option></select></div><div class="field"><label>現場タイプ</label><select id="filterType" onchange="renderEvents()"><option value="">すべて</option></select></div></div></details>
+  <div class="eventlist" id="eventList"></div>
+ </section>
+</div>
+<section class="panel" style="margin-top:18px" aria-labelledby="reportSearchHeading">
+ <div class="sectionhead"><h2 id="reportSearchHeading">🔎 レポを探す</h2></div>
+ <div class="report-tools"><input id="reportSearchInput" type="search" placeholder="レポ・セトリ・感想を検索…" oninput="renderReportSearch()" style="flex:1;min-width:180px"><select id="reportSearchType" onchange="renderReportSearch()"><option value="">すべての種類</option><option value="live">ライブ・公演</option><option value="chat">リリイベ・特典会</option></select><select id="reportSearchFavorite" onchange="renderReportSearch()"><option value="">すべて</option><option value="favorite">♡ お気に入りのみ</option></select></div>
+ <div id="reportSearchResults" class="report-search-results"><div class="empty">レポを検索できるよ🩷</div></div>
+</section>
+<section class="panel dashboard-bottom" aria-labelledby="dashboardHeading">
+ <div class="sectionhead"><h2 id="dashboardHeading">📊 推し活の記録</h2></div>
+ <div id="dashboardTiles" class="monthtiles"></div>
+</section>
+<p class="footer"> </p>
+</div>
+
+
+<div class="modal" id="settingsModal"><div class="modalbox"><div class="modalhead"><div><h2>アプリ設定</h2></div><button class="secondary" onclick="closeModal('settingsModal')">閉じる</button></div>
+<div class="fieldgrid">
+<div class="field full"><label for="settingTitle">トップ画面のタイトル</label><input id="settingTitle" maxlength="80" placeholder="例：Oshi Log"></div>
+<div class="field full"><label for="settingMessage">トップに表示するひとこと</label><input id="settingMessage" maxlength="100" placeholder="例：今日も大好き！"></div>
+<div class="field full"><label>テーマカラー</label><div class="color-options" id="colorOptions">
+<button type="button" class="color-chip" style="--swatch-color:#ec4899;background:#ec4899!important" aria-label="ピンク" onclick="chooseColor('#ec4899')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#38bdf8;background:#38bdf8!important" aria-label="水色" onclick="chooseColor('#38bdf8')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#a78bfa;background:#a78bfa!important" aria-label="紫" onclick="chooseColor('#a78bfa')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#34d399;background:#34d399!important" aria-label="緑" onclick="chooseColor('#34d399')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#f87171;background:#f87171!important" aria-label="赤" onclick="chooseColor('#f87171')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#fbbf24;background:#fbbf24!important" aria-label="黄色" onclick="chooseColor('#fbbf24')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#64748b;background:#64748b!important" aria-label="グレー" onclick="chooseColor('#64748b')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#c084fc;background:#c084fc!important" aria-label="ラベンダー" onclick="chooseColor('#c084fc')"></button>
+<button type="button" class="color-chip" style="--swatch-color:#222222;background:#222222!important" aria-label="黒" onclick="chooseColor('#222222')"></button>
+</div></div>
+<div class="field full" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)"><h3>投稿時の選択肢をカスタム</h3><div class="fieldgrid"><div class="field"><label for="optionEventTypes">現場タイプ</label><textarea id="optionEventTypes" rows="5"></textarea></div><div class="field"><label for="optionStatuses">チケット・参加状況</label><textarea id="optionStatuses" rows="5"></textarea></div><div class="field"><label for="optionParts">レポの部・回</label><textarea id="optionParts" rows="5"></textarea></div><div class="field"><label for="optionKinds">レポの種類（1行1つ）</label><textarea id="optionKinds" rows="5"></textarea></div><div class="field full"><label for="optionBenefits">特典会の種類</label><textarea id="optionBenefits" rows="5"></textarea></div></div><h3 style="margin-top:14px">メンバー</h3><div id="memberEditorList" class="member-editor-list"></div><button type="button" class="secondary small" onclick="addMemberEditorRow()">＋ メンバーを追加</button></div>
+<div class="field full"><label for="settingImage">トップ画像（iPhoneの写真から選べるよ）</label><input id="settingImage" type="file" accept="image/*" onchange="previewSettingImage(event)"><img id="coverPreview" class="cover-preview" alt="トップ画像プレビュー"></div>
+</div>
+<div class="field full" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)"><h3>データのバックアップ・復元</h3><div class="setting-actions"><button type="button" onclick="backup()">JSONバックアップを書き出す</button><button type="button" class="secondary" onclick="document.getElementById('restoreFile').click()">バックアップを復元</button><input id="restoreFile" type="file" accept="application/json,.json" class="hidden" onchange="restoreBackup(event)"></div><div id="backupStatus" class="backup-status"></div><p class="notice">復元前には現在のデータも自動でバックアップするので、必要ならあとで戻せるよ。</p></div>
+ <div class="setting-actions" style="margin-top:16px"><button onclick="saveSettings()">設定を保存</button><button class="secondary" onclick="clearSettingImage()">トップ画像を外す</button><button class="secondary" onclick="resetSettings()">初期設定に戻す</button></div>
+
+</div></div>
+
+<div class="modal" id="eventModal"><div class="modalbox"><div class="modalhead"><h2 id="eventModalTitle">現場を追加</h2><button class="secondary" onclick="closeModal('eventModal')">閉じる</button></div>
+<form id="eventForm" onsubmit="saveEvent(event)"><input type="hidden" id="eventId"><div class="fieldgrid">
+<div class="field"><label for="name">現場名 *</label><input id="name" required placeholder="例：リリースイベント"></div>
+<div class="field"><label for="type">現場タイプ</label><select id="type"><option>ライブ・コンサート</option><option>リリイベ</option><option>舞台・ミュージカル</option><option>ファンミ</option><option>配信</option><option>その他</option></select></div>
+<div class="field"><label for="date">日付 *</label><input id="date" type="date" required></div>
+<div class="field"><label for="time">時間</label><input id="time" type="time"></div>
+<div class="field"><label for="status">チケット・参加状況</label><select id="status"><option>予定</option><option>申し込み中</option><option>当落待ち</option><option>当選</option><option>入金済み</option><option>落選</option><option>参戦済み</option><option>中止</option></select></div>
+<div class="field"><label for="venue">会場</label><input id="venue" placeholder="会場名"></div>
+<div class="field"><label for="applyDate">申し込み日</label><input id="applyDate" type="date"></div>
+<div class="field"><label for="lotteryDate">当落発表日</label><input id="lotteryDate" type="date"></div>
+<div class="field"><label for="seat">座席・整理番号</label><input id="seat" placeholder="例：A列 / 整理番号"></div>
+<div class="field"><label for="ticketNote">チケット・受付メモ</label><input id="ticketNote" placeholder="電子チケットなど"></div>
+
+</div><div class="actions" style="margin-top:14px"><button type="submit">保存する</button><button type="button" class="secondary" onclick="closeModal('eventModal')">キャンセル</button></div></form></div></div>
+
+<div class="modal" id="detailModal"><div class="modalbox"><div class="modalhead"><div><h2 id="detailTitle">現場詳細</h2></div><button class="secondary" onclick="closeModal('detailModal')">閉じる</button></div>
+<div id="detailMeta" class="meta" style="margin-bottom:12px"></div>
+<div class="actions" style="margin-bottom:14px"><button onclick="editCurrent()">現場情報を編集</button><button class="secondary" onclick="openReport()">＋ レポを書く</button><button class="danger" onclick="deleteCurrent()">削除</button></div>
+<div id="reportArea"></div>
+</div></div>
+
+<div class="modal" id="reportModal"><div class="modalbox"><div class="modalhead"><div><h2 id="reportTitle">レポ</h2></div><button class="secondary" onclick="closeModal('reportModal')">閉じる</button></div>
+<div id="draftStatus" class="draft-status" aria-live="polite">入力内容は自動保存されるよ</div>
+<div class="fieldgrid" style="margin-bottom:12px">
+ <div class="field"><label for="reportKind">レポの種類</label><select id="reportKind" onchange="toggleReportKind()"><option value="chat">リリイベ・特典会（チャット形式）</option><option value="live">ライブ・公演レポ</option></select></div>
+ <div class="field" id="partWrap"><label id="partLabel" for="part">何部？</label><select id="part"><option>1部</option><option>2部</option><option>3部</option><option>4部</option><option>5部</option><option>6部</option><option>その他</option></select></div>
+ <div class="field" id="benefitWrap"><label for="benefit">特典会の種類</label><select id="benefit"><option>ハイタッチ会</option><option>握手会</option><option>トーク会</option><option>サイン会</option><option>ツーショット会</option><option>グループショット会</option><option>その他</option></select></div>
+ <div class="field" id="reportMemberWrap"><label for="reportMember">メンバー</label><select id="reportMember" onchange="renderMessages((events.find(x=>x.id===currentId)?.reports||[]).find(x=>x.id===currentReportId)?.messages||[])"></select></div>
+</div>
+<div id="chatPanel"><div class="chatbox" id="chatMessages"><div class="empty">まだメッセージがないよ。下から最初のひとことを追加してね🩷</div></div>
+<div class="chatcomposer"><select id="speaker" aria-label="話者"><option value="me">わたし</option><option value="oshi">推し</option><option value="memo">思い出メモ</option></select><textarea id="chatText" placeholder="会話や思い出を入力…（Enterで改行）"></textarea><button id="messageSubmitButton" onclick="addMessage()">追加</button><button id="cancelMessageEdit" class="secondary hidden" onclick="cancelMessageEdit()">編集キャンセル</button></div><div class="setting-actions" style="margin-top:8px"><button type="button" class="secondary small" onclick="openMessageManager()">メッセージを編集・削除</button></div></div>
+<div id="livePanel" class="hidden"><div class="fieldgrid"><div class="field full"><label for="setlist">セトリ</label><textarea id="setlist" placeholder="1. 曲名&#10;2. 曲名&#10;3. 曲名"></textarea></div><div class="field full"><label for="liveHighlights">印象に残った演出・ファンサ</label><textarea id="liveHighlights" placeholder="目が合った瞬間、演出、表情など"></textarea></div><div class="field full"><label for="liveImpression">ライブ全体の感想</label><textarea id="liveImpression" placeholder="自由に感想を書いてね"></textarea></div></div><button style="margin-top:12px" onclick="saveLiveReport()">レポを保存</button></div>
+<div class="eventcard" style="margin-top:14px"><h3 style="margin-top:0">📸 思い出の写真</h3><div class="field"><label for="reportImages">写真を追加</label><input id="reportImages" type="file" accept="image/*" multiple onchange="addReportImages(event)"></div><div id="reportImagePreview" class="photo-grid"></div></div>
+<div class="chattools"><button type="button" onclick="saveChatReport()">保存してレポを表示</button><button class="secondary small" onclick="closeModal('reportModal')">閉じる</button></div>
+</div></div>
+
+
+<div class="modal" id="reportReadModal"><div class="modalbox report-read-box"><div class="modalhead"><div><h2 id="readReportHeading">レポ</h2></div><button class="secondary" onclick="closeModal('reportReadModal')">閉じる</button></div><div id="readReportMeta" class="report-read-meta"></div><div id="readChatMessages" class="chatbox report-read-chat"></div><div id="readLiveContent" class="hidden"></div><div class="setting-actions" style="margin-top:12px"><button onclick="editCurrentReport()">編集</button><button id="readFavoriteButton" class="secondary favorite-btn" onclick="toggleCurrentFavorite()">♡ お気に入り</button><button class="secondary" onclick="downloadChatImage()">思い出カードを保存</button></div></div></div>
+
+<div class="modal" id="messageManagerModal"><div class="modalbox"><div class="modalhead"><div><h2>メッセージの編集・削除</h2></div><button class="secondary" onclick="closeModal('messageManagerModal')">閉じる</button></div><div id="messageManagerList" class="recordlist"></div></div></div>
+<div class="modal" id="messageEditModal"><div class="modalbox"><div class="modalhead"><h2>メッセージを編集</h2><button class="secondary" onclick="closeModal('messageEditModal')">閉じる</button></div><div class="fieldgrid"><div class="field full"><label for="managedSpeaker">話者</label><select id="managedSpeaker"><option value="me">わたし</option><option value="oshi">推し</option><option value="memo">思い出メモ</option></select></div><div class="field full"><label for="managedText">メッセージ</label><textarea id="managedText" rows="5"></textarea></div></div><div class="setting-actions" style="margin-top:12px"><button type="button" onclick="saveManagedMessage()">変更を保存</button><button type="button" class="secondary" onclick="closeModal('messageEditModal')">キャンセル</button></div></div></div>
+
+<script>
+const KEY='pink_oshi_log_v1';
+let editingMessageIndex=null;
+
+const SETTINGS_KEY='pink_oshi_settings_v1';
+const DRAFT_KEY='pink_oshi_report_draft_v1';
+const BACKUP_DATE_KEY='pink_oshi_last_backup_v1';
+let appSettings=loadSettings(), pendingImage=null;
+function loadSettings(){try{return JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}catch(e){return {}}}
+function applySettings(){
+  if(typeof applyReportOptions==='function')applyReportOptions();
+ const s=appSettings||{}, color=s.color||'#ec4899';
+ document.documentElement.style.setProperty('--pink',color);
+ document.documentElement.style.setProperty('--pink2',mixColor(color,'#ffffff',0.68));
+ document.documentElement.style.setProperty('--line',mixColor(color,'#ffffff',0.66));
+ document.documentElement.style.setProperty('--pale',mixColor(color,'#ffffff',0.90));
+ document.documentElement.style.setProperty('--accent-light',mixColor(color,'#ffffff',0.87));
+ document.documentElement.style.setProperty('--accent-bubble',mixColor(color,'#ffffff',0.90));
+ document.documentElement.style.setProperty('--accent-bg',mixColor(color,'#ffffff',0.92));
+ document.documentElement.style.setProperty('--accent-text',darkenHex(color,.48));
+ document.documentElement.style.setProperty('--theme-wash',mixColor(color,'#ffffff',0.92));
+ document.documentElement.style.setProperty('--button-ink',contrastInk(color));
+ document.querySelectorAll('.color-chip').forEach(b=>b.classList.toggle('active',b.getAttribute('aria-label')===colorName(color)));
+ fillDynamicEventOptions();
+ document.title=s.title||'Oshi Log';
+ const title=document.getElementById('appTitleDisplay');
+ const subtitle=document.getElementById('appSubtitleDisplay');
+ if(title) title.textContent=s.title||'Oshi Log';
+ if(subtitle) subtitle.textContent=s.message||s.subtitle||'推し活現場管理';
+ const hero=document.querySelector('.hero');
+ if(hero){
+  if(s.image){hero.classList.add('has-cover');hero.style.backgroundImage=`linear-gradient(90deg, #fff9 0%, #fff7 60%, #fff3),url("${s.image}")`;}
+  else{hero.classList.remove('has-cover');hero.style.backgroundImage='';}
+ }
+}
+const DEFAULT_REPORT_OPTIONS={
+ parts:['1部','2部','3部','4部','5部','6部','その他'],
+ kinds:[{value:'chat',label:'リリイベ・特典会（チャット形式）'},{value:'live',label:'ライブ・公演レポ'}],
+ benefits:['ハイタッチ会','握手会','トーク会','サイン会','ツーショット会','グループショット会','その他']
+};
+function getReportOptions(){
+ const saved=appSettings.reportOptions||{};
+ return {
+  parts:Array.isArray(saved.parts)&&saved.parts.length?saved.parts:DEFAULT_REPORT_OPTIONS.parts,
+  kinds:Array.isArray(saved.kinds)&&saved.kinds.length?saved.kinds:DEFAULT_REPORT_OPTIONS.kinds,
+  benefits:Array.isArray(saved.benefits)&&saved.benefits.length?saved.benefits:DEFAULT_REPORT_OPTIONS.benefits
+ };
+}
+function linesToOptions(value){return value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter((x,i,a)=>a.indexOf(x)===i)}
+function fillSelectOptions(id,items,selected){
+ const el=document.getElementById(id);if(!el)return;
+ el.innerHTML=items.map(item=>{
+  const value=typeof item==='string'?item:item.value;
+  const label=typeof item==='string'?item:item.label;
+  return `<option value="${esc(value)}">${esc(label)}</option>`;
+ }).join('');
+ if(selected!=null&&Array.from(el.options).some(o=>o.value===selected))el.value=selected;
+}
+function applyReportOptions(){
+ const o=getReportOptions();
+ fillSelectOptions('part',o.parts,document.getElementById('part')?.value||o.parts[0]);
+ fillSelectOptions('reportKind',o.kinds,document.getElementById('reportKind')?.value||'chat');
+ fillSelectOptions('benefit',o.benefits,document.getElementById('benefit')?.value||o.benefits[0]);
+}
+const DEFAULT_EVENT_OPTIONS={types:['ライブ・コンサート','リリイベ','舞台・ミュージカル','ファンミ','配信','その他'],statuses:['予定','申し込み中','当落待ち','当選','入金済み','落選','参戦済み','中止']};
+function getAllOptions(){const eo=appSettings.eventOptions||{};const ro=getReportOptions();return {eventTypes:Array.isArray(eo.types)&&eo.types.length?eo.types:DEFAULT_EVENT_OPTIONS.types,statuses:Array.isArray(eo.statuses)&&eo.statuses.length?eo.statuses:DEFAULT_EVENT_OPTIONS.statuses,report:ro,members:Array.isArray(appSettings.members)&&appSettings.members.length?appSettings.members.map(m=>({name:m.name||'メンバー',photo:(typeof m.photo==='string'&&m.photo.startsWith('data:image/'))?m.photo:''})):[{name:'推し',photo:''}]}}
+function fillDynamicEventOptions(){const o=getAllOptions();[['type',o.eventTypes],['status',o.statuses],['filterType',o.eventTypes],['filterStatus',o.statuses]].forEach(([id,items])=>{const el=document.getElementById(id);if(!el)return;const old=el.value;el.innerHTML=(id.startsWith('filter')?'<option value="">すべて</option>':'')+items.map(x=>`<option>${esc(x)}</option>`).join('');if(items.includes(old))el.value=old});}
+function fillMemberOptions(selected){const el=document.getElementById('reportMember');if(!el)return;const ms=getAllOptions().members;el.innerHTML=ms.map(m=>`<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('');if(selected&&ms.some(m=>m.name===selected))el.value=selected;}
+function renderMemberEditor(members){const el=document.getElementById('memberEditorList');if(!el)return;const list=Array.isArray(members)&&members.length?members:[{name:'推し',photo:''}];el.innerHTML=list.map((m,i)=>{const photo=typeof m.photo==='string'&&m.photo.startsWith('data:image/')?m.photo:'';const initial=(m.name||'メンバー').slice(0,1);return `<div class="member-editor-row" data-index="${i}">${photo?`<img class="member-editor-avatar" src="${esc(photo)}" alt="${esc(m.name||'メンバー')}の写真">`:`<div class="member-editor-placeholder">${esc(initial)}</div>`}<div class="member-editor-controls"><input type="text" class="member-editor-name" value="${esc(m.name||'')}" maxlength="40" placeholder="メンバー名"><input type="file" accept="image/*" aria-label="${esc(m.name||'メンバー')}の写真を選ぶ" onchange="updateMemberPhoto(event,${i})"><input type="hidden" class="member-editor-photo" value="${esc(photo)}"></div><button type="button" class="secondary small member-editor-remove" onclick="removeMemberEditorRow(${i})" aria-label="メンバーを削除">削除</button></div>`}).join('')}
+function readMemberEditor(){return Array.from(document.querySelectorAll('#memberEditorList .member-editor-row')).map(row=>({name:row.querySelector('.member-editor-name')?.value.trim()||'',photo:row.querySelector('.member-editor-photo')?.value||''})).filter(m=>m.name||m.photo)}
+function addMemberEditorRow(){const members=readMemberEditor();members.push({name:'',photo:''});renderMemberEditor(members);const inputs=document.querySelectorAll('#memberEditorList .member-editor-name');inputs[inputs.length-1]?.focus()}
+function removeMemberEditorRow(index){const members=readMemberEditor();if(members.length<=1){alert('メンバーは最低1人必要だよ');return}members.splice(index,1);renderMemberEditor(members)}
+async function updateMemberPhoto(ev,index){const file=ev.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){alert('写真ファイルを選んでね');return}try{const photo=await resizeMemberPhoto(file);const row=document.querySelector(`#memberEditorList .member-editor-row[data-index="${index}"]`);if(!row)return;row.querySelector('.member-editor-photo').value=photo;const old=row.querySelector('.member-editor-avatar,.member-editor-placeholder');const img=document.createElement('img');img.className='member-editor-avatar';img.src=photo;img.alt=(row.querySelector('.member-editor-name').value||'メンバー')+'の写真';old.replaceWith(img)}catch(err){alert('写真を読み込めなかったよ。別の写真を試してね')}finally{ev.target.value=''}}
+function resizeMemberPhoto(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const size=320,side=Math.min(img.width,img.height),sx=(img.width-side)/2,sy=(img.height-side)/2,canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;canvas.getContext('2d').drawImage(img,sx,sy,side,side,0,0,size,size);resolve(canvas.toDataURL('image/jpeg',0.84))};img.src=reader.result};reader.readAsDataURL(file)})}
+function openSettings(){
+ document.getElementById('settingTitle').value=appSettings.title||'Oshi Log';
+ document.getElementById('settingMessage').value=appSettings.message||appSettings.subtitle||'';
+ pendingImage=appSettings.image||null;
+ const p=document.getElementById('coverPreview');if(pendingImage){p.src=pendingImage;p.style.display='block'}else{p.removeAttribute('src');p.style.display='none'}
+ const opts=getAllOptions();document.getElementById('optionEventTypes').value=opts.eventTypes.join('\n');document.getElementById('optionStatuses').value=opts.statuses.join('\n');document.getElementById('optionParts').value=opts.report.parts.join('\n');document.getElementById('optionKinds').value=opts.report.kinds.map(k=>k.label).join('\n');document.getElementById('optionBenefits').value=opts.report.benefits.join('\n');renderMemberEditor(opts.members);updateColorChips();openModal('settingsModal');
+}
+function chooseColor(c){appSettings={...appSettings,color:c};updateColorChips()}
+function updateColorChips(){document.querySelectorAll('.color-chip').forEach(b=>{b.classList.toggle('active',b.getAttribute('aria-label')===colorName(appSettings.color||'#ec4899'))})}
+function rgbFromHex(hex){const h=String(hex||'').replace('#','');if(!/^[0-9a-fA-F]{6}$/.test(h))return [236,72,153];return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16))}
+function mixColor(a,b,amount){const x=rgbFromHex(a),y=rgbFromHex(b);return '#'+x.map((v,i)=>Math.round(v*(1-amount)+y[i]*amount).toString(16).padStart(2,'0')).join('')}
+function darkenHex(hex,amount){return '#'+rgbFromHex(hex).map(v=>Math.round(v*(1-amount)).toString(16).padStart(2,'0')).join('')}
+function contrastInk(hex){const c=rgbFromHex(hex).map(v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)});return (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])>0.48?'#54233d':'#ffffff'}
+function colorName(c){return ({'#ec4899':'ピンク','#38bdf8':'水色','#a78bfa':'紫','#34d399':'緑','#f87171':'赤','#fbbf24':'黄色','#64748b':'グレー','#c084fc':'ラベンダー','#222222':'黒'})[c]||''}
+function previewSettingImage(ev){
+ const file=ev.target.files&&ev.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){alert('画像ファイルを選んでね');return}
+ const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{
+  const max=1000,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));
+  canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+  pendingImage=canvas.toDataURL('image/jpeg',0.82);
+  const p=document.getElementById('coverPreview');p.src=pendingImage;p.style.display='block';
+ };img.src=reader.result};reader.readAsDataURL(file);
+}
+function clearSettingImage(){pendingImage=null;document.getElementById('settingImage').value='';const p=document.getElementById('coverPreview');p.removeAttribute('src');p.style.display='none'}
+function saveSettings(){
+ delete appSettings.name;
+ const kinds=linesToOptions(document.getElementById('optionKinds').value).map(label=>({value:label==='リリイベ・特典会（チャット形式）'?'chat':label==='ライブ・公演レポ'?'live':'custom_'+label.toLowerCase().replace(/[^a-z0-9一-龯ぁ-んァ-ヶ]+/g,'_'),label}));const members=readMemberEditor();if(!kinds.length||!linesToOptions(document.getElementById('optionEventTypes').value).length||!linesToOptions(document.getElementById('optionStatuses').value).length||!linesToOptions(document.getElementById('optionParts').value).length||!linesToOptions(document.getElementById('optionBenefits').value).length){alert('選択肢は各項目1つ以上入力してね');return}if(!members.length||members.some(m=>!m.name)){alert('メンバーは1人以上登録し、名前を入力してね');return}appSettings={...appSettings,title:document.getElementById('settingTitle').value.trim()||'Oshi Log',message:document.getElementById('settingMessage').value.trim(),image:pendingImage,color:appSettings.color||'#ec4899',eventOptions:{types:linesToOptions(document.getElementById('optionEventTypes').value),statuses:linesToOptions(document.getElementById('optionStatuses').value)},reportOptions:{parts:linesToOptions(document.getElementById('optionParts').value),kinds,benefits:linesToOptions(document.getElementById('optionBenefits').value)},members};
+ try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(appSettings));applySettings();closeModal('settingsModal');alert('設定を保存したよ🩷')}
+ catch(e){alert('保存できなかったよ。画像サイズが大きい可能性があるので、別の写真で試してね。')}
+}
+function resetSettings(){if(!confirm('設定を初期状態に戻す？'))return;appSettings={color:'#ec4899',title:'Oshi Log',message:'推し活現場管理',eventOptions:DEFAULT_EVENT_OPTIONS,reportOptions:{parts:DEFAULT_REPORT_OPTIONS.parts,kinds:DEFAULT_REPORT_OPTIONS.kinds,benefits:DEFAULT_REPORT_OPTIONS.benefits},members:[{name:'推し',photo:''}]};pendingImage=null;try{localStorage.removeItem(SETTINGS_KEY)}catch(e){}applySettings();closeModal('settingsModal')}
+
+let events=loadData(), viewDate=new Date(), selectedDate=isoDate(new Date()), currentId=null, currentReportId=null;
+function loadData(){try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(events));try{renderDashboard();renderReportSearch()}catch(e){}}
+function uid(){return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function isoDate(d){const x=new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmt(d){if(!d)return '日付未設定';const x=new Date(d+'T00:00:00');return `${x.getFullYear()}/${x.getMonth()+1}/${x.getDate()}`}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function moveMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()}
+function renderCalendar(){
+ const y=viewDate.getFullYear(),m=viewDate.getMonth();document.getElementById('monthLabel').textContent=`${y}年 ${m+1}月`;
+ const first=new Date(y,m,1),start=new Date(y,m,1-((first.getDay()+6)%7));let out=['月','火','水','木','金','土','日'].map(d=>`<div class="dow">${d}</div>`).join('');
+ for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const ds=isoDate(d),arr=events.filter(e=>e.date===ds);out+=`<button class="day ${d.getMonth()!==m?'muted':''} ${ds===isoDate(new Date())?'today':''} ${ds===selectedDate?'selected':''}" onclick="selectDate('${ds}')"><span class="num">${d.getDate()}</span>${arr.slice(0,2).map(e=>`<span class="dot">${esc(e.name)}</span>`).join('')}${arr.length>2?`<span class="dot">＋${arr.length-2}件</span>`:''}</button>`}
+ document.getElementById('calendar').innerHTML=out;
+}
+function selectDate(d){selectedDate=d;viewDate=new Date(d+'T00:00:00');renderCalendar();document.getElementById('selectedHeading').textContent='🎪'+fmt(d)+'の予定';renderEvents()}
+function renderEvents(){
+ const q=(document.getElementById('search').value||'').toLowerCase(),fs=document.getElementById('filterStatus').value,ft=document.getElementById('filterType').value,allMode=!!document.getElementById('allSearchDetails')?.open;
+ document.getElementById('selectedHeading').textContent=allMode?'🎪すべての予定':(selectedDate?'🎪'+fmt(selectedDate)+'の予定':'🎪予定');
+ let arr=events.filter(e=>(allMode||!selectedDate||e.date===selectedDate)&&(!fs||e.status===fs)&&(!ft||e.type===ft));
+ if(q)arr=events.filter(e=>(!fs||e.status===fs)&&(!ft||e.type===ft)&&[e.name,e.venue,e.memo,...(e.reports||[]).map(r=>JSON.stringify(r))].join(' ').toLowerCase().includes(q));
+ arr.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+ document.getElementById('eventList').innerHTML=arr.length?arr.map(e=>`<article class="eventcard"><div class="eventtop"><div><h3>${esc(e.name)}</h3><div class="meta">${fmt(e.date)} ${e.time||''}<br>${e.venue?esc(e.venue)+' · ':''}${e.type?esc(e.type):''}</div></div><span class="pill">${esc(e.status)}</span></div><div class="actions" style="margin-top:10px"><button class="small" onclick="showDetail('${e.id}')">詳細・レポ ${e.reports?.length?`(${e.reports.length})`:''}</button><button class="secondary small" onclick="editEvent('${e.id}')">編集</button></div></article>`).join(''):(allMode?'<div class="empty">該当する現場はないよ。</div>':'<div class="empty">この日の現場はまだないよ。</div>');
+}
+function openEvent(){document.getElementById('eventForm').reset();document.getElementById('eventId').value='';document.getElementById('date').value=selectedDate||isoDate(new Date());document.getElementById('eventModalTitle').textContent='現場を追加';openModal('eventModal')}
+function editEvent(id){const e=events.find(x=>x.id===id);if(!e)return;document.getElementById('eventForm').reset();document.getElementById('eventId').value=e.id;['name','type','date','time','status','venue','applyDate','lotteryDate','seat','ticketNote'].forEach(k=>document.getElementById(k).value=e[k]||'');document.getElementById('eventModalTitle').textContent='現場を編集';closeModal('detailModal');openModal('eventModal')}
+function saveEvent(ev){ev.preventDefault();const id=document.getElementById('eventId').value;const e={id:id||uid()};['name','type','date','time','status','venue','applyDate','lotteryDate','seat','ticketNote'].forEach(k=>e[k]=document.getElementById(k).value.trim());const old=events.find(x=>x.id===id);e.reports=old?.reports||[];if(old)events=events.map(x=>x.id===id?e:x);else events.push(e);persist();selectedDate=e.date;viewDate=new Date(e.date+'T00:00:00');closeModal('eventModal');refresh();showDetail(e.id)}
+function showDetail(id){currentId=id;const e=events.find(x=>x.id===id);if(!e)return;document.getElementById('detailTitle').textContent=e.name;const item=(label,value,icon='')=>value?`<div class="detail-item"><small>${icon?icon+' ':''}${label}</small><strong>${esc(value)}</strong></div>`:'';let html=`<div class="detail-badges">${e.type?`<span class="pill">${esc(e.type)}</span>`:''}${e.status?`<span class="pill">${esc(e.status)}</span>`:''}</div><div class="event-detail-grid">${item('日付',e.date?fmt(e.date):'','▦')}${item('時間',e.time,'◷')}${item('会場',e.venue,'⌖')}${item('座席・整理番号',e.seat,'▤')}${item('申し込み日',e.applyDate?fmt(e.applyDate):'','↗')}${item('当落発表日',e.lotteryDate?fmt(e.lotteryDate):'','◇')}${item('チケット・受付メモ',e.ticketNote,'♧')}</div>`;document.getElementById('detailMeta').innerHTML=html;renderReportArea(e);openModal('detailModal')}
+function renderReportArea(e){const rs=e.reports||[];document.getElementById('reportArea').innerHTML=`<h3>レポ帳 (${rs.length})</h3>`+(rs.length?rs.map(r=>{const live=r.kind==='live';const main=live?`レポ・${r.part||'部未設定'}`:`${r.part||'部未設定'}・${r.benefit||'特典会'}`;const category=live?'ライブ・公演レポ':'リリイベ・特典会';const count=(r.messages||[]).length;const photos=(r.images||[]).length;const sub=live?`${category}・📸 ${photos}枚`:`${category}・${count}メッセージ・📸 ${photos}枚`;return `<div class="eventcard"><div class="eventtop"><div><strong class="report-list-title">${esc(main)}</strong><div class="meta report-list-subtitle">${esc(sub)}</div></div><div class="actions"><span class="favorite-mark ${r.favorite?'is-favorite':''}" title="${r.favorite?'お気に入り済み':'レポ詳細からお気に入りに追加'}">${r.favorite?'♥':'♡'}</span><button class="small" onclick="openExistingReport('${e.id}','${r.id}')">開く</button><button class="danger small" onclick="deleteReport('${e.id}','${r.id}')">削除</button></div></div></div>`}).join(''):'<div class="empty">まだレポがないよ。参加した部ごとに残そう🩷</div>')}
+function allReports(){return events.flatMap(e=>(e.reports||[]).map(r=>({e,r}))).sort((a,b)=>String(b.e.date||'').localeCompare(String(a.e.date||'')))}
+function reportText(e,r){return [e.name,e.venue,e.date,r.part,r.benefit,r.member,r.setlist,r.highlights,r.impression,...(r.messages||[]).map(m=>m.text)].filter(Boolean).join(' ').toLowerCase()}
+function renderReportSearch(){const host=document.getElementById('reportSearchResults');if(!host)return;const q=(document.getElementById('reportSearchInput')?.value||'').trim().toLowerCase(),type=document.getElementById('reportSearchType')?.value||'',fav=document.getElementById('reportSearchFavorite')?.value||'';const rows=allReports().filter(({e,r})=>(!q||reportText(e,r).includes(q))&&(!type||(type==='live'?r.kind==='live':r.kind!=='live'))&&(!fav||r.favorite));host.innerHTML=rows.length?rows.map(({e,r})=>{const live=r.kind==='live',title=live?`レポ・${r.part||'部未設定'}`:`${r.part||'部未設定'}・${r.benefit||'特典会'}`;const excerpt=(live?[r.highlights,r.impression,r.setlist].filter(Boolean).join(' '):(r.messages||[]).map(m=>m.text).join(' ')).replace(/\s+/g,' ').slice(0,115);return `<article class="eventcard report-search-card"><div><strong>${esc(title)} ${r.favorite?'♥':''}</strong><div class="meta">${esc(e.name)} · ${e.date?fmt(e.date):'日付未設定'} · ${live?'ライブ・公演':'リリイベ・特典会'}</div>${excerpt?`<div class="meta">${esc(excerpt)}${excerpt.length>=115?'…':''}</div>`:''}</div><div class="actions"><button class="small" onclick="openExistingReport('${e.id}','${r.id}')">開く</button></div></article>`}).join(''):'<div class="empty">該当するレポがないよ。別のキーワードでも探してみてね🩷</div>'}
+function toggleFavorite(eid,rid){const e=events.find(x=>x.id===eid),r=e?.reports?.find(x=>x.id===rid);if(!r)return;r.favorite=!r.favorite;persist();if(e)renderReportArea(e);renderReportSearch();if(currentId===eid&&currentReportId===rid)updateCurrentFavoriteButton()}
+function toggleCurrentFavorite(){toggleFavorite(currentId,currentReportId);updateCurrentFavoriteButton()}
+function updateCurrentFavoriteButton(){const r=events.find(x=>x.id===currentId)?.reports?.find(x=>x.id===currentReportId),b=document.getElementById('readFavoriteButton');if(!b||!r)return;b.textContent=r.favorite?'♥ お気に入り済み':'♡ お気に入り';b.classList.toggle('is-favorite',!!r.favorite)}
+function renderDashboard(){const el=document.getElementById('dashboardTiles');if(!el)return;const now=new Date(),year=String(now.getFullYear()),thisYear=events.filter(e=>(e.date||'').startsWith(year)),upcoming=events.filter(e=>e.date>=isoDate(now)&&!['参戦済み','中止','落選'].includes(e.status)),attended=events.filter(e=>e.status==='参戦済み'||(e.date<isoDate(now)&&e.status!=='中止'&&e.status!=='落選')).length,reports=events.reduce((n,e)=>n+(e.reports||[]).length,0);const tiles=[['🎪 現場の総数',events.length],['🗓️ これからの予定',upcoming.length],['🌸 今年の現場',thisYear.length],['📖 レポの数',reports]];el.innerHTML=tiles.map(([label,n])=>`<div class="tile"><span>${label}</span><strong>${n}</strong></div>`).join('')}
+function updateBackupStatus(){const el=document.getElementById('backupStatus');if(!el)return;const value=localStorage.getItem(BACKUP_DATE_KEY);el.textContent=value?'最終バックアップ：'+new Date(value).toLocaleString('ja-JP'):'まだバックアップを書き出していません';}
+function saveReportDraft(){const e=events.find(x=>x.id===currentId);if(!e||!document.getElementById('reportModal')?.classList.contains('open'))return;const draft={eventId:currentId,reportId:currentReportId,kind:document.getElementById('reportKind').value,part:document.getElementById('part').value,benefit:document.getElementById('benefit').value,member:document.getElementById('reportMember').value,setlist:document.getElementById('setlist').value,highlights:document.getElementById('liveHighlights').value,impression:document.getElementById('liveImpression').value,chatText:document.getElementById('chatText').value,savedAt:new Date().toISOString()};try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft));const el=document.getElementById('draftStatus');if(el)el.textContent='✓ 下書きを自動保存中';}catch(err){const el=document.getElementById('draftStatus');if(el)el.textContent='自動保存できませんでした。容量を確認してね。'}}
+function restoreReportDraft(e,reportId=null){try{const d=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');if(!d||d.eventId!==e.id||(reportId!==null&&d.reportId!==reportId))return false;if(reportId===null&&d.reportId&&(e.reports||[]).some(r=>r.id===d.reportId)){currentReportId=d.reportId;const saved=e.reports.find(r=>r.id===d.reportId);renderReportImages(saved.images||[]);renderMessages(saved.messages||[])}if(d.kind&&Array.from(document.getElementById('reportKind').options).some(o=>o.value===d.kind))document.getElementById('reportKind').value=d.kind;if(d.part)document.getElementById('part').value=d.part;if(d.benefit)document.getElementById('benefit').value=d.benefit;if(d.member)fillMemberOptions(d.member);document.getElementById('setlist').value=d.setlist||'';document.getElementById('liveHighlights').value=d.highlights||'';document.getElementById('liveImpression').value=d.impression||'';document.getElementById('chatText').value=d.chatText||'';return true}catch(err){return false}}
+function clearReportDraft(){try{localStorage.removeItem(DRAFT_KEY)}catch(e){}}
+
+function openReport(){applyReportOptions();fillMemberOptions();cancelMessageEdit();const e=events.find(x=>x.id===currentId);if(!e)return;currentReportId=null;document.getElementById('reportTitle').textContent=e.name+' のレポ';fillMemberOptions();document.getElementById('reportKind').value=Array.from(document.getElementById('reportKind').options).some(o=>o.value===(e.type==='ライブ・コンサート'||e.type==='舞台・ミュージカル'?'live':'chat'))?(e.type==='ライブ・コンサート'||e.type==='舞台・ミュージカル'?'live':'chat'):document.getElementById('reportKind').options[0]?.value;document.getElementById('part').value=Array.from(document.getElementById('part').options).some(o=>o.value==='1部')?'1部':document.getElementById('part').options[0]?.value||'';document.getElementById('benefit').value=Array.from(document.getElementById('benefit').options).some(o=>o.value==='トーク会')?'トーク会':document.getElementById('benefit').options[0]?.value||'';document.getElementById('chatText').value='';document.getElementById('chatMessages').innerHTML='<div class="empty">まだメッセージがないよ。下から最初のひとことを追加してね🩷</div>';document.getElementById('setlist').value='';document.getElementById('liveHighlights').value='';document.getElementById('liveImpression').value='';document.getElementById('reportImages').value='';renderReportImages([]);restoreReportDraft(e,null);toggleReportKind();openModal('reportModal');saveReportDraft()}
+function openExistingReport(eid,rid){currentId=eid;currentReportId=rid;const e=events.find(x=>x.id===eid),r=e?.reports?.find(x=>x.id===rid);if(!e||!r)return;closeModal('detailModal');renderReadReport(e,r);openModal('reportReadModal')}
+function renderReadReport(e,r){const member=getAllOptions().members.find(m=>m.name===r.member)||getAllOptions().members[0]||{name:'推し',photo:''};document.getElementById('readReportHeading').textContent=e.name;const live=r.kind==='live';document.getElementById('readReportMeta').innerHTML=[e.date?fmt(e.date):'',r.part||'',...(!live?[r.benefit||'',member.name]:[])].filter(Boolean).map(x=>`<span class="pill">${esc(x)}</span>`).join('');document.getElementById('readChatMessages').classList.toggle('hidden',live);document.getElementById('readLiveContent').classList.toggle('hidden',!live);if(live){document.getElementById('readLiveContent').innerHTML=[['セトリ',r.setlist],['印象に残った演出・ファンサ',r.highlights],['ライブ全体の感想',r.impression]].filter(x=>x[1]).map(x=>`<div class="detail-note"><strong>${x[0]}</strong><div style="margin-top:6px;white-space:pre-wrap">${esc(x[1])}</div></div>`).join('')}else{document.getElementById('readChatMessages').innerHTML=(r.messages||[]).length?(r.messages||[]).map(m=>{const me=m.speaker==='me',memo=m.speaker==='memo';return `<div class="chatrow ${esc(m.speaker)}">${!memo?`<span class="chatname">${me?'わたし':esc(member.name)}</span>`:''}<div class="chatline">${m.speaker==='oshi'?memberAvatarHTML(member,28):''}<div class="bubble">${esc(m.text)}</div></div></div>`}).join(''):'<div class="empty">まだメッセージがないよ。</div>'}updateCurrentFavoriteButton()}
+function afterRenderReadReport(){updateCurrentFavoriteButton()}
+function editCurrentReport(){const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);if(!e||!r)return;closeModal('reportReadModal');loadReportIntoEditor(e,r);openModal('reportModal')}
+function loadReportIntoEditor(e,r){applyReportOptions();cancelMessageEdit();document.getElementById('reportTitle').textContent=e.name+' のレポ';fillMemberOptions(r.member);document.getElementById('reportKind').value=Array.from(document.getElementById('reportKind').options).some(o=>o.value===r.kind)?r.kind:(r.kind==='live'?'live':document.getElementById('reportKind').options[0]?.value);document.getElementById('part').value=r.part||document.getElementById('part').options[0]?.value||'';document.getElementById('benefit').value=r.benefit||document.getElementById('benefit').options[0]?.value||'';document.getElementById('chatText').value='';document.getElementById('setlist').value=r.setlist||'';document.getElementById('liveHighlights').value=r.highlights||'';document.getElementById('liveImpression').value=r.impression||'';document.getElementById('reportImages').value='';renderReportImages(r.images||[]);renderMessages(r.messages||[]);restoreReportDraft(e,r.id);toggleReportKind();openModal('reportModal');saveReportDraft()}
+function toggleReportKind(){const live=document.getElementById('reportKind').value==='live';document.getElementById('partWrap').classList.remove('hidden');document.getElementById('partLabel').textContent=live?'部':'何部？';document.getElementById('benefitWrap').classList.toggle('hidden',live);document.getElementById('reportMemberWrap').classList.toggle('hidden',live);document.getElementById('chatPanel').classList.toggle('hidden',live);document.getElementById('livePanel').classList.toggle('hidden',!live)}
+function memberAvatarHTML(member,size=34){const name=member?.name||'推し',photo=typeof member?.photo==='string'&&member.photo.startsWith('data:image/')?member.photo:'';return photo?`<img class="member-avatar" style="width:${size}px;height:${size}px;flex-basis:${size}px" src="${esc(photo)}" alt="${esc(name)}の写真">`:`<span class="member-avatar-placeholder" style="width:${size}px;height:${size}px;flex-basis:${size}px" aria-label="${esc(name)}">${esc(name.slice(0,1))}</span>`}
+function renderMessages(msgs){const member=getAllOptions().members.find(m=>m.name===document.getElementById('reportMember')?.value)||getAllOptions().members[0]||{name:'推し',photo:''};document.getElementById('chatMessages').innerHTML=msgs.length?msgs.map(m=>{const me=m.speaker==='me',memo=m.speaker==='memo';return `<div class="chatrow ${esc(m.speaker)}">${!memo?`<span class="chatname">${me?'わたし':esc(member.name)}</span>`:''}<div class="chatline">${m.speaker==='oshi'?memberAvatarHTML(member):''}<div class="bubble">${esc(m.text)}</div></div></div>`}).join(''):'<div class="empty">まだメッセージがないよ。下から最初のひとことを追加してね🩷</div>';const box=document.getElementById('chatMessages');box.scrollTop=box.scrollHeight}
+function addMessage(){const text=document.getElementById('chatText').value.trim();if(!text)return;const e=events.find(x=>x.id===currentId);if(!e)return;let r=getWorkingReport(e);r.kind=document.getElementById('reportKind').value;r.part=document.getElementById('part').value;r.benefit=document.getElementById('benefit').value;r.member=document.getElementById('reportMember').value;r.messages=r.messages||[];if(editingMessageIndex!==null){const old=r.messages[editingMessageIndex];if(!old){cancelMessageEdit();return}r.messages[editingMessageIndex]={...old,speaker:document.getElementById('speaker').value,text};cancelMessageEdit()}else{r.messages.push({speaker:document.getElementById('speaker').value,text,time:new Date().toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})});document.getElementById('chatText').value=''}persist();renderMessages(r.messages)}
+function openMessageManager(){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);
+ if(!r||!Array.isArray(r.messages)||!r.messages.length){alert('管理できるメッセージがまだないよ。先にチャットを保存してね🩷');return}
+ renderMessageManager(r.messages);openModal('messageManagerModal');
+}
+function renderMessageManager(msgs){
+ const el=document.getElementById('messageManagerList');
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId),memberName=(getAllOptions().members.find(x=>x.name===r?.member)||{name:'推し'}).name;
+ el.innerHTML=msgs.length?msgs.map((m,i)=>`<div class="eventcard"><div class="meta">${m.speaker==='me'?'わたし':m.speaker==='oshi'?esc(memberName):'思い出メモ'} · ${esc(m.time||'')}</div><div style="white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0">${esc(m.text)}</div><div class="actions"><button type="button" class="secondary small" onclick="editMessageFromManager(${i})">編集</button><button type="button" class="danger small" onclick="removeMessageFromManager(${i})">削除</button></div></div>`).join(''):'<div class="empty">メッセージはまだないよ。</div>';
+}
+let managedMessageIndex=null;
+function editMessageFromManager(i){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId),m=r?.messages?.[i];if(!m)return;
+ managedMessageIndex=i;document.getElementById('managedSpeaker').value=m.speaker||'me';document.getElementById('managedText').value=m.text||'';
+ closeModal('messageManagerModal');openModal('messageEditModal');
+}
+function saveManagedMessage(){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId),i=managedMessageIndex;
+ if(!r||!Array.isArray(r.messages)||i===null||!r.messages[i])return;
+ const before={...r.messages[i]};r.messages[i]={...r.messages[i],speaker:document.getElementById('managedSpeaker').value,text:document.getElementById('managedText').value.trim()};
+ try{persist();renderMessages(r.messages);closeModal('messageEditModal');renderMessageManager(r.messages);openModal('messageManagerModal');managedMessageIndex=null}
+ catch(err){r.messages[i]=before;alert('保存できなかったよ。バックアップを確認してね。')}
+}
+function removeMessageFromManager(i){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);
+ if(!r||!Array.isArray(r.messages)||!r.messages[i]||!confirm('このメッセージを削除する？'))return;
+ const before=r.messages.slice();r.messages.splice(i,1);
+ try{persist();renderMessages(r.messages);renderMessageManager(r.messages)}catch(err){r.messages=before;alert('保存できなかったよ。バックアップを確認してね。')}
+}
+function editMessage(i){const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId),m=r?.messages?.[i];if(!m)return;editingMessageIndex=i;document.getElementById('speaker').value=m.speaker||'me';document.getElementById('chatText').value=m.text||'';document.getElementById('messageSubmitButton').textContent='変更を保存';document.getElementById('cancelMessageEdit').classList.remove('hidden');document.getElementById('chatText').focus()}
+function cancelMessageEdit(){editingMessageIndex=null;const text=document.getElementById('chatText'),submit=document.getElementById('messageSubmitButton'),cancel=document.getElementById('cancelMessageEdit');if(text)text.value='';if(submit)submit.textContent='追加';if(cancel)cancel.classList.add('hidden')}
+function getWorkingReport(e){let r=(e.reports||[]).find(x=>x.id===currentReportId);if(!r){r={id:uid(),kind:document.getElementById('reportKind').value,part:document.getElementById('part').value,benefit:document.getElementById('benefit').value,member:document.getElementById('reportMember').value,messages:[]};e.reports=e.reports||[];e.reports.push(r);currentReportId=r.id}return r}
+function removeMessage(i){const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);if(!r||!confirm('このメッセージを削除する？'))return;r.messages.splice(i,1);persist();renderMessages(r.messages)}
+function saveChatReport(){const e=events.find(x=>x.id===currentId);if(!e)return;let r=getWorkingReport(e);r.kind=document.getElementById('reportKind').value;r.part=document.getElementById('part').value;r.benefit=document.getElementById('benefit').value;r.member=document.getElementById('reportMember').value;r.images=Array.isArray(r.images)?r.images:[];try{persist();clearReportDraft();closeModal('reportModal');renderReadReport(e,r);openModal('reportReadModal')}catch(err){alert('保存できなかったよ。バックアップを確認してね。')}}
+function saveLiveReport(){const e=events.find(x=>x.id===currentId);if(!e)return;let r=getWorkingReport(e);r.kind=document.getElementById('reportKind').value;r.part=document.getElementById('part').value;r.setlist=document.getElementById('setlist').value;r.highlights=document.getElementById('liveHighlights').value;r.impression=document.getElementById('liveImpression').value;persist();clearReportDraft();closeModal('reportModal');renderReadReport(e,r);openModal('reportReadModal')}
+async function downloadChatImage(){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);if(!e||!r){alert('先にレポを保存してね');return}
+ const color=appSettings.color||'#ec4899',live=r.kind==='live',W=1000,pad=48,gap=22,ctxCanvas=document.createElement('canvas'),ctx=ctxCanvas.getContext('2d');
+ const sections=live?[['セトリ',r.setlist],['印象に残った演出・ファンサ',r.highlights],['ライブ全体の感想',r.impression]].filter(x=>x[1]):[['会話・思い出',(r.messages||[]).map(m=>(m.speaker==='me'?'わたし':m.speaker==='memo'?'思い出メモ':(r.member||'推し'))+'：'+m.text).join('\n')]].filter(x=>x[1]);
+ const photos=(r.images||[]).slice(0,6),loaded=await Promise.all(photos.map(src=>loadCanvasImage(src)));ctx.font='22px sans-serif';const wrap=(text,max)=>{const lines=[];String(text||'').split('\n').forEach(p=>{let line='';for(const ch of p){if(ctx.measureText(line+ch).width>max&&line){lines.push(line);line=ch}else line+=ch}lines.push(line)});return lines};
+ let blocks=sections.map(([label,text])=>({label,lines:wrap(text,W-pad*2-36)}));let H=pad+140;blocks.forEach(b=>H+=46+b.lines.length*31+gap);if(loaded.some(Boolean))H+=Math.ceil(loaded.filter(Boolean).length/3)*220+gap;H+=pad;ctxCanvas.width=W;ctxCanvas.height=H;ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.fillStyle=color;ctx.globalAlpha=.13;ctx.fillRect(0,0,W,130);ctx.globalAlpha=1;ctx.fillStyle='#54233d';ctx.font='bold 34px sans-serif';ctx.fillText(e.name.slice(0,38),pad,pad+28);ctx.font='20px sans-serif';ctx.fillText([e.date?fmt(e.date):'日付未設定',live?'ライブ・公演レポ':'リリイベ・特典会',r.part].filter(Boolean).join('　·　'),pad,pad+68);ctx.font='16px sans-serif';ctx.fillStyle='#8d6b7d';ctx.fillText('Oshi Log  ♡',pad,pad+104);let y=pad+140;
+ blocks.forEach(b=>{ctx.fillStyle=color;ctx.globalAlpha=.13;roundRect(ctx,pad,y,W-pad*2,38,10,true,false);ctx.globalAlpha=1;ctx.fillStyle='#54233d';ctx.font='bold 21px sans-serif';ctx.fillText(b.label,pad+14,y+26);y+=48;ctx.font='19px sans-serif';ctx.fillStyle='#30242b';b.lines.forEach(line=>{ctx.fillText(line,pad+12,y);y+=31});y+=gap});
+ const valid=loaded.filter(Boolean);if(valid.length){ctx.fillStyle='#54233d';ctx.font='bold 21px sans-serif';ctx.fillText('📸 思い出の写真',pad,y+8);y+=28;valid.forEach((img,i)=>{const col=i%3,row=Math.floor(i/3),x=pad+col*300,yy=y+row*210;const scale=Math.min(270/img.width,180/img.height);ctx.drawImage(img,x,yy,img.width*scale,img.height*scale)});}
+ const a=document.createElement('a');a.download=`思い出カード_${e.date||'日付なし'}_${r.part||'部なし'}.png`;a.href=ctxCanvas.toDataURL('image/png');a.click();
+}
+function loadCanvasImage(src){return new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=src})}
+function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}
+function renderReportImages(images){
+ const el=document.getElementById('reportImagePreview'); if(!el)return;
+ el.innerHTML=images.length?images.map((src,i)=>`<div class="photo-item"><img src="${src}" alt="思い出の写真 ${i+1}" class="tap-photo" role="button" tabindex="0" title="タップして拡大" onclick="openPhotoViewer(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPhotoViewer(${i})}"><button class="danger small" onclick="removeReportImage(${i})">この写真を削除</button></div>`).join(''):'<div class="photo-empty">まだ写真はないよ🩷</div>';
+}
+function openPhotoViewer(index){
+ const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);
+ const src=r?.images?.[index];if(!src)return;
+ const viewer=document.getElementById('photoViewer'),img=document.getElementById('photoViewerImage');
+ img.src=src;img.alt='思い出の写真を拡大表示';viewer.classList.add('open');viewer.setAttribute('aria-hidden','false');
+}
+function closePhotoViewer(){
+ const viewer=document.getElementById('photoViewer'),img=document.getElementById('photoViewerImage');
+ viewer.classList.remove('open');viewer.setAttribute('aria-hidden','true');img.src='';
+}
+function resizeImageFile(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const max=1400,scale=Math.min(1,max/Math.max(img.width,img.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',0.78))};img.src=reader.result};reader.readAsDataURL(file)})}
+async function addReportImages(ev){
+ const files=Array.from(ev.target.files||[]);if(!files.length)return;
+ const e=events.find(x=>x.id===currentId);if(!e)return;
+ let r=getWorkingReport(e);r.images=Array.isArray(r.images)?r.images:[];
+ const remaining=6-r.images.length;if(remaining<=0){alert('このレポに追加できる写真は最大6枚だよ');ev.target.value='';return}
+ try{for(const file of files.slice(0,remaining)){if(!file.type.startsWith('image/'))continue;r.images.push(await resizeImageFile(file))}persist();renderReportImages(r.images);if(files.length>remaining)alert('写真は1レポ最大6枚なので、追加できる分だけ保存したよ🩷')}
+ catch(err){alert('画像を読み込めなかったよ。別の写真でもう一度試してね。')}
+ finally{ev.target.value=''}
+}
+function removeReportImage(i){const e=events.find(x=>x.id===currentId),r=e?.reports?.find(x=>x.id===currentReportId);if(!r||!Array.isArray(r.images))return;if(!confirm('この写真をレポから削除する？'))return;r.images.splice(i,1);try{persist();renderReportImages(r.images)}catch(err){alert('保存できなかったよ。バックアップを確認してね。')}}
+function deleteReport(eid,rid){
+  if(!confirm('このレポを削除する？'))return;
+  const e=events.find(x=>x.id===eid);
+  if(!e){alert('対象の現場が見つからなかったよ。画面を更新してみてね。');return}
+  const before=e.reports||[];
+  e.reports=before.filter(r=>r.id!==rid);
+  if(e.reports.length===before.length){alert('削除するレポが見つからなかったよ。');return}
+  try{
+    persist();
+    renderReportArea(e);
+    alert('レポを削除したよ🩷');
+  }catch(err){
+    e.reports=before;
+    alert('保存できず、削除を取り消したよ。設定・バックアップからJSONバックアップを保存して、ブラウザの空き容量を確認してね。');
+  }
+}
+function editCurrent(){editEvent(currentId)}
+function deleteCurrent(){
+  if(!confirm('この現場と紐づくレポをすべて削除する？'))return;
+  const before=events;
+  const target=currentId;
+  if(!before.some(e=>e.id===target)){alert('対象の現場が見つからなかったよ。画面を更新してみてね。');return}
+  events=before.filter(e=>e.id!==target);
+  try{
+    persist();
+    closeModal('detailModal');
+    currentId=null;
+    refresh();
+    alert('現場と紐づくレポを削除したよ🩷');
+  }catch(err){
+    events=before;
+    alert('保存できず、削除を取り消したよ。設定・バックアップからJSONバックアップを保存して、ブラウザの空き容量を確認してね。');
+    refresh();
+  }
+}
+function refresh(){document.getElementById('selectedHeading').textContent=selectedDate?'🎪'+fmt(selectedDate)+'の予定':'🎪予定';renderCalendar();renderEvents();renderDashboard();renderReportSearch()}
+function backup(){try{const blob=new Blob([JSON.stringify({app:'Oshi Log',version:4,exportedAt:new Date().toISOString(),settings:appSettings,events},null,2)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download=`pink-oshi-log-${isoDate(new Date())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);localStorage.setItem(BACKUP_DATE_KEY,new Date().toISOString());updateBackupStatus();alert('バックアップを書き出したよ🩷')}catch(err){alert('バックアップを作成できなかったよ。ブラウザの空き容量を確認してね。')}}
+function downloadSafetyBackup(){const blob=new Blob([JSON.stringify({app:'Oshi Log',version:4,exportedAt:new Date().toISOString(),settings:appSettings,events},null,2)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download=`pink-oshi-log-before-restore-${isoDate(new Date())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function restoreBackup(ev){const file=ev.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);const arr=Array.isArray(data)?data:data.events;if(!Array.isArray(arr))throw new Error('形式');if(!arr.every(e=>e&&typeof e==='object'))throw new Error('データ形式');if(!confirm('バックアップを復元すると、現在の現場・レポが置き換わるよ。続ける？\n\n復元前に現在のデータも別ファイルとして保存します。'))return;downloadSafetyBackup();events=arr.map(e=>({...e,id:e.id||uid(),reports:Array.isArray(e.reports)?e.reports:[]}));if(data&&data.settings&&typeof data.settings==='object'){appSettings=data.settings;localStorage.setItem(SETTINGS_KEY,JSON.stringify(appSettings))}persist();refresh();applySettings();renderDashboard();renderReportSearch();alert('バックアップを復元したよ🩷\n念のため、復元前のデータもダウンロードフォルダに保存しました。')}catch(err){alert('読み込めなかったよ。Oshi Log のJSONファイルを選んでね。')}finally{ev.target.value=''}};reader.readAsText(file)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePhotoViewer()});
+document.getElementById('chatText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addMessage()}});
+refresh();
+applySettings();
+renderDashboard();renderReportSearch();updateBackupStatus();
+['reportKind','part','benefit','reportMember','setlist','liveHighlights','liveImpression','chatText'].forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',saveReportDraft);el.addEventListener('change',saveReportDraft)}});
+</script>
+</body>
+</html>
